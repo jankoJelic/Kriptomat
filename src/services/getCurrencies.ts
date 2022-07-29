@@ -1,11 +1,6 @@
 import axios from 'axios';
 import {COINS_URL} from 'constants/apiEndpoints';
 
-interface Props {
-  count: number | undefined;
-  currency: string;
-}
-
 const getCurrencies = async () => {
   const response = await axios.get(COINS_URL + '/markets', {
     params: {
