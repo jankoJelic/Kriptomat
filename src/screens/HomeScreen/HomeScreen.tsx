@@ -1,12 +1,21 @@
 import useAbortEffect from 'hooks/useAbortEffect';
 import Coin from 'models/Coin';
 import React, {useState} from 'react';
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import getCurrencies from 'services/getCurrencies';
 import KriptomatHeader from 'assets/images/kriptomatHeader.svg';
 import SearchBar from 'components/SearchBar';
+import CoinsList from './CoinsList';
 
 const HomeScreen = () => {
+  const {width} = useWindowDimensions();
   const [data, setData] = useState<Coin[]>([]);
   const [searchInput, setSearchInput] = useState('');
 
@@ -18,29 +27,14 @@ const HomeScreen = () => {
     }
   });
 
-  const renderItem = ({item}: {item: Coin}) => {
-    return (
-      <TouchableOpacity
-        style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Image source={{uri: item.image}} style={{width: 32, aspectRatio: 1}} />
-        <View>
-          <Text style={{fontFamily: 'Montserrat-Thin'}}>{item.name}</Text>
-          <Text>{item.symbol}</Text>
-        </View>
-        <View></View>
-      </TouchableOpacity>
-    );
-  };
+  const sortByCoinName = () => {}
+  const sortByPrice = () => {}
 
   return (
     <View style={{alignItems: 'center', paddingTop: 20, paddingHorizontal: 10}}>
       <KriptomatHeader width="45%" height={50} />
       <SearchBar onChange={txt => setSearchInput(txt)} />
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        ListHeaderComponent={<View></View>}
-      />
+      <CoinsList data={data} onPressSortByCoin={sortByCoinName} sortByPrice={sortByPrice} />
     </View>
   );
 };

@@ -7,6 +7,12 @@ const colors = {
   greenPositive: '#0DEAA9',
   redNegative: '#FF9696',
   white: '#FFFFFF',
+  black: '#000000',
+};
+
+const fonts = {
+  regular: 'Montserrat-Regular',
+  thin: 'Montserrat-Thin',
 };
 
 const roundness = 6;
@@ -14,6 +20,7 @@ const roundness = 6;
 const appStyles = {
   colors,
   roundness,
+  fonts,
 };
 
 export default appStyles;
