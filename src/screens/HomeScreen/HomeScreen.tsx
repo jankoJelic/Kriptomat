@@ -1,4 +1,3 @@
-import useAbortEffect from 'hooks/useAbortEffect';
 import Coin from 'models/Coin';
 import React, {useCallback, useEffect, useState} from 'react';
 import {View} from 'react-native';
@@ -13,18 +12,11 @@ const HomeScreen = () => {
 
   const fetchData = async () => {
     const response = await getCurrencies();
-    console.log(response.status);
+
     if (response.status === 200) {
       setData(response.data);
     }
   };
-  // useAbortEffect(async () => {
-  //   const response = await getCurrencies();
-  //   console.log(response.status);
-  //   if (response.status === 200) {
-  //     setData(response.data);
-  //   }
-  // });
 
   useEffect(() => {
     fetchData();
