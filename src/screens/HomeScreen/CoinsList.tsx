@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   headerTitle: {fontFamily: appStyles.fonts.regular, marginRight: 4},
 });
 
-export default CoinsList;
+export default React.memo(CoinsList);

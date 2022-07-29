@@ -31,8 +31,8 @@ const CoinListItem: React.FC<Props> = ({item}) => {
   );
 
   const CoinPrice = () => (
-    <View style={{width: 80, alignItems: 'flex-end'}}>
-      <Text style={styles.priceText}>{item.current_price}</Text>
+    <View style={{width: 200, alignItems: 'flex-end'}}>
+      <Text style={styles.priceText}>€{item.current_price}</Text>
       <View style={{flexDirection: 'row'}}>
         <Triangle
           color={changeColor}
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
   },
   image: {width: 32, aspectRatio: 1, marginRight: 10},
   nameText: {
-    fontFamily: appStyles.fonts.regular,
+    fontFamily: appStyles.fonts.semiBold,
     color: appStyles.colors.textMain,
     fontSize: 14,
   },
   priceText: {
-    fontFamily: appStyles.fonts.regular,
+    fontFamily: appStyles.fonts.semiBold,
     color: appStyles.colors.textMain,
   },
 });

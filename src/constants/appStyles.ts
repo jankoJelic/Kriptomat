@@ -13,6 +13,7 @@ const colors = {
 const fonts = {
   regular: 'Montserrat-Regular',
   thin: 'Montserrat-Thin',
+  semiBold: 'Montserrat-SemiBold',
 };
 
 const roundness = 6;
