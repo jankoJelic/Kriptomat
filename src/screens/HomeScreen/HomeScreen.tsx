@@ -1,11 +1,13 @@
 import useAbortEffect from 'hooks/useAbortEffect';
 import Coin from 'models/Coin';
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, useWindowDimensions} from 'react-native';
 import getCurrencies from 'services/getCurrencies';
 import KriptomatHeader from 'assets/images/kriptomatHeader.svg';
+import SearchBar from 'components/SearchBar';
 
 const HomeScreen = () => {
+  const {width, height} = useWindowDimensions();
   const [data, setData] = useState<Coin[]>([]);
 
   useAbortEffect(async () => {
@@ -17,10 +19,9 @@ const HomeScreen = () => {
   });
 
   return (
-    <View>
-      <KriptomatHeader />
-      {/* <SvgUri width={48} height={30} uri="../../" /> */}
-      <Text>Home Screen</Text>
+    <View style={{alignItems: 'center', paddingTop: 20, paddingHorizontal: 10}}>
+      <KriptomatHeader width="45%" height={50} />
+      <SearchBar />
     </View>
   );
 };
