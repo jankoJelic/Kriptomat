@@ -1,15 +1,18 @@
 import useAbortEffect from 'hooks/useAbortEffect';
+import Coin from 'models/Coin';
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
-import getTop50Currencies from 'services/getTop50Currencies';
+import getCurrencies from 'services/getCurrencies';
 
 const HomeScreen = () => {
-  const [data, setData] = useState([]);
-  
-  useAbortEffect(async () => {
-    const response = await getTop50Currencies();
+  const [data, setData] = useState<Coin[]>([]);
 
-    console.log(response);
+  useAbortEffect(async () => {
+    const response = await getCurrencies();
+
+    if (response.status === 200) {
+      setData(response.data);
+    }
   });
 
   return (
