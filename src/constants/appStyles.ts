@@ -6,6 +6,7 @@ const colors = {
   textGrey: '#707070',
   greenPositive: '#0DEAA9',
   redNegative: '#FF9696',
+  white: '#FFFFFF',
 };
 
 const roundness = 6;
