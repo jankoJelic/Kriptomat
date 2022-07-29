@@ -14,7 +14,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-Kriptomat-KriptomatTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Kriptomat-KriptomatTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		DB5151E0289473CB007DDFD3 /* Feather.js in Resources */ = {isa = PBXBuildFile; fileRef = DB5151DF289473CB007DDFD3 /* Feather.js */; };
 		DB5151F3289476DD007DDFD3 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB5151E1289476DC007DDFD3 /* Montserrat-Thin.ttf */; };
 		DB5151F4289476DD007DDFD3 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB5151E2289476DC007DDFD3 /* Montserrat-Light.ttf */; };
 		DB5151F5289476DD007DDFD3 /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB5151E3289476DC007DDFD3 /* Montserrat-ExtraBold.ttf */; };
@@ -62,7 +61,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-Kriptomat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Kriptomat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Kriptomat/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Kriptomat-KriptomatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kriptomat-KriptomatTests.release.xcconfig"; path = "Target Support Files/Pods-Kriptomat-KriptomatTests/Pods-Kriptomat-KriptomatTests.release.xcconfig"; sourceTree = "<group>"; };
-		DB5151DF289473CB007DDFD3 /* Feather.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Feather.js; path = "../node_modules/react-native-vector-icons/Feather.js"; sourceTree = "<group>"; };
+		DB5151DF289473CB007DDFD3 /* Feather.ttf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Feather.ttf"; sourceTree = "<group>"; };
 		DB5151E1289476DC007DDFD3 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Thin.ttf"; path = "../src/assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		DB5151E2289476DC007DDFD3 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Light.ttf"; path = "../src/assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		DB5151E3289476DC007DDFD3 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-ExtraBold.ttf"; path = "../src/assets/fonts/Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
@@ -208,7 +207,7 @@
 				DB5151ED289476DD007DDFD3 /* Montserrat-SemiBoldItalic.ttf */,
 				DB5151E1289476DC007DDFD3 /* Montserrat-Thin.ttf */,
 				DB5151F2289476DD007DDFD3 /* Montserrat-ThinItalic.ttf */,
-				DB5151DF289473CB007DDFD3 /* Feather.js */,
+				DB5151DF289473CB007DDFD3 /* Feather.ttf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -320,7 +319,6 @@
 				DB5151F5289476DD007DDFD3 /* Montserrat-ExtraBold.ttf in Resources */,
 				DB515201289476DD007DDFD3 /* Montserrat-LightItalic.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				DB5151E0289473CB007DDFD3 /* Feather.js in Resources */,
 				DB5151FF289476DD007DDFD3 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				DB5151F3289476DD007DDFD3 /* Montserrat-Thin.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,

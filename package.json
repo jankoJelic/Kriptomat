@@ -54,5 +54,10 @@
       "__DEV__": true
     },
     "verbose": true
+  },
+  "rnpm": {
+    "assets": [
+   ".src/assets/fonts/"
+    ]
   }
 }

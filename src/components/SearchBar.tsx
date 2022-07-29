@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: appStyles.roundness,
     paddingHorizontal: 18,
     marginVertical: 10,
+    height: 40,
   },
 });
 
