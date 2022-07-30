@@ -33,9 +33,9 @@ const CoinsList: React.FC = () => {
   const coins = useAppSelector(state => state.dataSlice.coins);
   const dispatch = useAppDispatch();
   const {width} = useWindowDimensions();
+  const CONTENT_WIDTH = width * 0.9;
 
   const [data, setData] = useState<Coin[]>([]);
-  const [searchInput, setSearchInput] = useState('');
   const [sorted, setSorted] = useState({
     by: '',
     ascending: false,
@@ -79,23 +79,33 @@ const CoinsList: React.FC = () => {
     }
   };
 
+  const handleSearch = (txt: string) => {
+    if (txt === '') {
+      setData(coins);
+      return;
+    }
+
+    setData(
+      coins.filter((coin: Coin) =>
+        (coin.name + coin.symbol).toLowerCase().includes(txt.toLowerCase()),
+      ),
+    );
+  };
+
   const renderItem = ({item}: {item: Coin}) => <CoinListItem item={item} />;
 
   return (
-    <>
-      <SearchBar onChange={txt => setSearchInput(txt)} />
+    <View style={{width: CONTENT_WIDTH}}>
+      <SearchBar onChange={handleSearch} />
+      <View style={styles.headerContainer}>
+        <HeaderTitle text="Coin" onPress={() => sortBy('name')} />
+        <HeaderTitle text="Price" onPress={() => sortBy('current_price')} />
+      </View>
       <FlatList
         data={data}
         renderItem={renderItem}
-        contentContainerStyle={{width: width * 0.9}}
-        ListHeaderComponent={
-          <View style={styles.headerContainer}>
-            <HeaderTitle text="Coin" onPress={() => sortBy('name')} />
-            <HeaderTitle text="Price" onPress={() => sortBy('current_price')} />
-          </View>
-        }
       />
-    </>
+    </View>
   );
 };
 

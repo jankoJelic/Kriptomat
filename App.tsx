@@ -8,14 +8,13 @@ import store from './src/store';
 
 const App = () => {
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
+    <SafeAreaView
       style={{flex: 1, backgroundColor: appStyles.colors.backgroundMain}}>
       <Provider store={store}>
         <MyStatusBar />
         <RootNavigator />
       </Provider>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

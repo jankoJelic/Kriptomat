@@ -4,6 +4,8 @@ import NavTitle from 'components/text/NavTitle';
 import RootStackParamList from 'models/RootStackParams';
 import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import appStyles from 'constants/appStyles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
@@ -19,6 +21,9 @@ const CurrencyScreen = ({navigation, route}: Props) => {
           <CurrencyImage uri={image.small} />
           <NavTitle text={name} />
         </View>
+      ),
+      headerRight: () => (
+        <Icon name="search" color={appStyles.colors.textMain} size={24} />
       ),
     });
   });
