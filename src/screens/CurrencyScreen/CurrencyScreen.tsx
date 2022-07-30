@@ -3,7 +3,7 @@ import CurrencyImage from 'components/images/CurrencyImage';
 import NavTitle from 'components/text/NavTitle';
 import RootStackParamList from 'models/RootStackParams';
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
@@ -30,11 +30,7 @@ const CurrencyScreen = ({navigation, route}: Props) => {
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+        <View style={styles.row}>
           <HeaderBackArrow />
           <CurrencyImage uri={image.small} />
           <NavTitle text={name} />
@@ -44,7 +40,7 @@ const CurrencyScreen = ({navigation, route}: Props) => {
         <Icon name="search" color={appStyles.colors.textMain} size={24} />
       ),
     });
-  });
+  }, []);
 
   const PriceAndChange = () => (
     <View style={styles.topView}>
@@ -77,6 +73,17 @@ const CurrencyScreen = ({navigation, route}: Props) => {
       <PriceAndChange />
       <LowHighTexts />
       <CurrencyLineChart />
+      <View style={styles.row}>
+        <Pressable onPress={() => console.log('pressed')}>
+          <Text
+            style={{
+              fontFamily: appStyles.fonts.regular,
+              color: appStyles.colors.actionBlue,
+            }}>
+            24h
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -97,6 +104,10 @@ const styles = StyleSheet.create({
     fontFamily: appStyles.fonts.semiBold,
     fontSize: 28,
     color: appStyles.colors.textMain,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

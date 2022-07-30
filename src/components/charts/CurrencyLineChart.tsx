@@ -40,10 +40,7 @@ const CurrencyLineChart = () => {
           ],
         }}
         chartConfig={chartConfig}
-        style={{
-          alignSelf: 'center',
-          marginVertical: 14,
-        }}
+        style={styles.chartStyle}
         width={width * 1.25}
         height={221}
         bezier
@@ -62,7 +59,7 @@ const CurrencyLineChart = () => {
 const styles = StyleSheet.create({
   xAxis: {
     position: 'absolute',
-    bottom: 52.7,
+    bottom: 38.7,
     height: 1,
     backgroundColor: appStyles.colors.lightGrey,
     width: '100%',
@@ -71,6 +68,10 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width * 0.94,
     overflow: 'hidden',
     alignSelf: 'center',
+  },
+  chartStyle: {
+    alignSelf: 'center',
+    marginTop: 14,
   },
 });
 
