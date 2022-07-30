@@ -1,18 +1,26 @@
 import React from 'react';
 import {LineChart} from 'react-native-chart-kit';
-import {useWindowDimensions, View} from 'react-native';
+import {Dimensions, StyleSheet, useWindowDimensions, View} from 'react-native';
 import appStyles from 'constants/appStyles';
 
 const CurrencyLineChart = () => {
-  const {width, height} = useWindowDimensions();
+  const {width} = useWindowDimensions();
+
+  const chartConfig = {
+    backgroundGradientFrom: appStyles.colors.backgroundMain,
+    backgroundGradientTo: appStyles.colors.backgroundMain,
+    color: () => appStyles.colors.actionBlue,
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientToOpacity: 0,
+    propsForBackgroundLines: {
+      stroke: appStyles.colors.lightGrey,
+    },
+    fillShadowGradientFrom: appStyles.colors.backgroundMain,
+    fillShadowGradientTo: appStyles.colors.backgroundMain,
+  };
 
   return (
-    <View
-      style={{
-        width: width * 0.94,
-        overflow: 'hidden',
-        alignSelf: 'center',
-      }}>
+    <View style={styles.container}>
       <LineChart
         data={{
           labels: [''],
@@ -31,23 +39,13 @@ const CurrencyLineChart = () => {
             },
           ],
         }}
-        width={width * 1.3}
-        height={221}
-        chartConfig={{
-          backgroundGradientFrom: appStyles.colors.backgroundMain,
-          backgroundGradientTo: appStyles.colors.backgroundMain,
-          color: (opacity = 1) => appStyles.colors.brand,
-          fillShadowGradient: appStyles.colors.backgroundMain,
-          backgroundGradientFromOpacity: 0,
-          backgroundGradientToOpacity: 0,
-          propsForBackgroundLines: {
-            stroke: appStyles.colors.grey,
-          },
-        }}
+        chartConfig={chartConfig}
         style={{
           alignSelf: 'center',
-          marginTop: 14,
+          marginVertical: 14,
         }}
+        width={width * 1.25}
+        height={221}
         bezier
         withVerticalLabels={false}
         withHorizontalLabels={false}
@@ -56,8 +54,24 @@ const CurrencyLineChart = () => {
         fromZero
         withDots={false}
       />
+      <View style={styles.xAxis} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  xAxis: {
+    position: 'absolute',
+    bottom: 52.7,
+    height: 1,
+    backgroundColor: appStyles.colors.lightGrey,
+    width: '100%',
+  },
+  container: {
+    width: Dimensions.get('window').width * 0.94,
+    overflow: 'hidden',
+    alignSelf: 'center',
+  },
+});
 
 export default CurrencyLineChart;

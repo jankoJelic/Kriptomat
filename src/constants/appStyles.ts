@@ -2,6 +2,7 @@ const colors = {
   brand: '#085FAD',
   backgroundMain: '#E5E5E5',
   grey: '#95989A',
+  lightGrey: '#C4C4C4',
   textMain: '#2F314B',
   textGrey: '#707070',
   greenPositive: '#0DEAA9',
