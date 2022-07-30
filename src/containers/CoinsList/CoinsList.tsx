@@ -3,7 +3,7 @@ import SortIcon from 'components/SortIcon';
 import appStyles from 'constants/appStyles';
 import CoinListItem from 'containers/CoinsList/CoinListItem';
 import Coin from 'models/Coin';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   View,
@@ -15,6 +15,7 @@ import {
 import getCurrencies from 'services/getCurrencies';
 import {storeCoins} from 'store/dataSlice';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
+import sortByProperty from 'util/arrays/sortByProperty';
 
 interface TitleProps {
   text: string;
@@ -35,6 +36,10 @@ const CoinsList: React.FC = () => {
 
   const [data, setData] = useState<Coin[]>(coins);
   const [searchInput, setSearchInput] = useState('');
+  const [sorted, setSorted] = useState({
+    by: '',
+    ascending: false,
+  });
 
   const fetchData = async () => {
     const response = await getCurrencies();
@@ -46,10 +51,32 @@ const CoinsList: React.FC = () => {
     fetchData();
   }, []);
 
-  const renderItem = ({item}: {item: Coin}) => <CoinListItem item={item} />;
+  const sortData = ({
+    ascending,
+    property,
+  }: {
+    ascending: boolean;
+    property: string;
+  }) => {
+    setData(
+      sortByProperty({
+        array: data.slice(),
+        property,
+        ascending,
+      }),
+    );
+    setSorted({by: property, ascending});
+  };
 
-  const sortByCoinName = useCallback(() => {}, []);
-  const sortByPrice = useCallback(() => {}, []);
+  const sortBy = (property: string) => {
+    if (sorted.by === property && sorted.ascending === true) {
+      sortData({ascending: false, property});
+    } else {
+      sortData({ascending: true, property});
+    }
+  };
+
+  const renderItem = ({item}: {item: Coin}) => <CoinListItem item={item} />;
 
   return (
     <>
@@ -60,8 +87,8 @@ const CoinsList: React.FC = () => {
         contentContainerStyle={{width: width * 0.9}}
         ListHeaderComponent={
           <View style={styles.headerContainer}>
-            <HeaderTitle text="Coin" onPress={sortByCoinName} />
-            <HeaderTitle text="Price" onPress={sortByPrice} />
+            <HeaderTitle text="Coin" onPress={() => sortBy('name')} />
+            <HeaderTitle text="Price" onPress={() => sortBy('current_price')} />
           </View>
         }
       />
@@ -79,4 +106,4 @@ const styles = StyleSheet.create({
   headerTitle: {fontFamily: appStyles.fonts.regular, marginRight: 4},
 });
 
-export default React.memo(CoinsList);
+export default CoinsList;
