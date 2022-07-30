@@ -7,6 +7,7 @@ import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
+import HeaderBackArrow from 'components/icons/HeaderBackArrow';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
@@ -26,8 +27,13 @@ const CurrencyScreen = ({navigation, route}: Props) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: () => (
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      headerLeft: () => (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <HeaderBackArrow />
           <CurrencyImage uri={image.small} />
           <NavTitle text={name} />
         </View>

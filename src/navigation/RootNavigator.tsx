@@ -26,8 +26,8 @@ const RootNavigator = () => {
           name="Currency"
           component={CurrencyScreen}
           options={{
-            headerLeft: () => <HeaderBackArrow />,
             headerBackVisible: false,
+            headerTitle: () => <></>,
           }}
         />
       </Stack.Navigator>
