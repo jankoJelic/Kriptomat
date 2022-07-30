@@ -8,6 +8,19 @@ import {setIsLoading} from 'store/appSlice';
 import RangeFilters from './RangeFilters';
 import {OnPressRangeFilterProps} from './types';
 
+const chartConfig = {
+  backgroundGradientFrom: appStyles.colors.backgroundMain,
+  backgroundGradientTo: appStyles.colors.backgroundMain,
+  color: () => appStyles.colors.actionBlue,
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientToOpacity: 0,
+  propsForBackgroundLines: {
+    stroke: appStyles.colors.lightGrey,
+  },
+  fillShadowGradientFrom: appStyles.colors.backgroundMain,
+  fillShadowGradientTo: appStyles.colors.backgroundMain,
+};
+
 const CurrencyLineChart = ({id = ''}) => {
   const {width} = useWindowDimensions();
   const dispatch = useAppDispatch();
@@ -15,26 +28,10 @@ const CurrencyLineChart = ({id = ''}) => {
   const [data, setData] = useState<number[]>([0]);
   const [activeFilter, setActiveFilter] = useState(1);
 
-  const chartConfig = {
-    backgroundGradientFrom: appStyles.colors.backgroundMain,
-    backgroundGradientTo: appStyles.colors.backgroundMain,
-    color: () => appStyles.colors.actionBlue,
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientToOpacity: 0,
-    propsForBackgroundLines: {
-      stroke: appStyles.colors.lightGrey,
-    },
-    fillShadowGradientFrom: appStyles.colors.backgroundMain,
-    fillShadowGradientTo: appStyles.colors.backgroundMain,
-  };
-
   const onPressRangeFilter = async ({
     days,
     filterId,
-  }: {
-    days: number | string;
-    filterId: number;
-  }) => {
+  }: OnPressRangeFilterProps) => {
     dispatch(setIsLoading(true));
 
     const response = await getCurrencyChartData({days, id});

@@ -2,17 +2,11 @@ import appStyles from 'constants/appStyles';
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet, View} from 'react-native';
 import filters from './filters';
-import {FilterId, OnPressRangeFilterProps} from './types';
+import {OnPressRangeFilterProps} from './types';
 
 interface Props {
   activeFilter: number;
-  onPressFilter: ({
-    days,
-    filterId,
-  }: {
-    days: string | number;
-    filterId: number;
-  }) => void;
+  onPressFilter: ({days, filterId}: OnPressRangeFilterProps) => void;
 }
 
 const RangeFilters: React.FC<Props> = ({activeFilter, onPressFilter}) => {
