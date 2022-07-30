@@ -8,6 +8,8 @@ const colors = {
   redNegative: '#FF9696',
   white: '#FFFFFF',
   black: '#000000',
+  greenPositivePastel: '#3fa581',
+  greenPositivePastelLight: '#4CB294',
 };
 
 const fonts = {

@@ -9,10 +9,14 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import Divider from 'components/Divider';
-import Triangle from 'components/Triangle';
 import getCurrency from 'services/getCurrency';
 import useMyNavigation from 'hooks/useMyNavigation';
 import CurrencyImage from 'components/images/CurrencyImage';
+import Icon from 'react-native-vector-icons/Entypo';
+import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
+import {useAppDispatch, useAppSelector} from 'store/hooks';
+import CoinDetails from 'models/CoinDetails';
+import {addCoinDetails} from 'store/dataSlice';
 
 interface Props {
   item: Coin;
@@ -21,6 +25,8 @@ interface Props {
 const CoinListItem: React.FC<Props> = ({item}) => {
   const {width} = useWindowDimensions();
   const navigation = useMyNavigation();
+  const coinsDetails = useAppSelector(state => state.dataSlice.coinsDetails);
+  const dispatch = useAppDispatch();
 
   const last24HoursChange = item.market_cap_change_percentage_24h;
   const negativeChange = last24HoursChange < 0;
@@ -44,12 +50,21 @@ const CoinListItem: React.FC<Props> = ({item}) => {
 
   const CoinPrice = () => (
     <View style={styles.priceContainer}>
-      <Text style={styles.priceText}>€{item.current_price}</Text>
+      <Text style={styles.priceText}>
+        €{coinPriceToLocaleString(item.current_price)}
+      </Text>
       <View style={styles.row}>
-        <Triangle
-          color={changeColor}
-          direction={negativeChange ? 'down' : 'up'}
+        <Icon
+          name={negativeChange ? 'triangle-down' : 'triangle-up'}
+          size={18}
+          color={
+            negativeChange
+              ? appStyles.colors.redNegative
+              : appStyles.colors.greenPositive
+          }
+          style={{top: 1}}
         />
+
         <Text
           style={{
             fontFamily: appStyles.fonts.regular,
@@ -62,10 +77,23 @@ const CoinListItem: React.FC<Props> = ({item}) => {
   );
 
   const handleOnPressCurrency = async () => {
+    const existingCoin = coinsDetails.find(coin => coin.id === item.id);
+
+    if (!!existingCoin) {
+      goToCurrencyScreen(existingCoin);
+      return;
+    }
+
     const response = await getCurrency(item.id);
 
-    if (response.status === 200)
-      navigation.navigate('Currency', {coinDetails: response.data});
+    if (response.status === 200) {
+      goToCurrencyScreen(response.data);
+      dispatch(addCoinDetails(response.data));
+    }
+  };
+
+  const goToCurrencyScreen = (coinDetails: CoinDetails) => {
+    navigation.navigate('Currency', {coinDetails});
   };
 
   return (

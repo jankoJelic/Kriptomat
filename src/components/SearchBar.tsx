@@ -48,10 +48,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     marginVertical: 0,
     height: 40,
-    shadowOffset: {width: 10, height: 10},
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    elevation: 1,
   },
 });
 

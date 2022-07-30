@@ -5,13 +5,18 @@ import React from 'react';
 import CurrencyScreen from 'screens/CurrencyScreen';
 import HomeScreen from 'screens/HomeScreen';
 import HeaderBackArrow from 'components/icons/HeaderBackArrow';
+import appStyles from 'constants/appStyles';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShadowVisible: false,
+          headerStyle: {backgroundColor: appStyles.colors.backgroundMain},
+        }}>
         <Stack.Screen
           name="Home"
           component={HomeScreen}

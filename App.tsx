@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {KeyboardAvoidingView, SafeAreaView} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import appStyles from './src/constants/appStyles';
 import RootNavigator from './src/navigation/RootNavigator';
 import MyStatusBar from './src/components/MyStatusBar';

@@ -42,6 +42,11 @@ const CoinsList: React.FC = () => {
   });
 
   const fetchData = async () => {
+    if (!!coins.length) {
+      setData(coins);
+      return;
+    }
+
     const response = await getCurrencies();
 
     if (response.status === 200) {
@@ -99,12 +104,12 @@ const CoinsList: React.FC = () => {
       <SearchBar onChange={handleSearch} />
       <View style={styles.headerContainer}>
         <HeaderTitle text="Coin" onPress={() => sortBy('name')} />
-        <HeaderTitle text="Price" onPress={() => sortBy('current_price')} />
+        <HeaderTitle
+          text="Price"
+          onPress={() => sortBy('market_cap_change_percentage_24h')}
+        />
       </View>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-      />
+      <FlatList data={data} renderItem={renderItem} />
     </View>
   );
 };

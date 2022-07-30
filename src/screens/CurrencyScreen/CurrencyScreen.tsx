@@ -6,12 +6,22 @@ import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
+import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
 const CurrencyScreen = ({navigation, route}: Props) => {
   const {
-    coinDetails: {name, image},
+    coinDetails: {
+      name,
+      image,
+      market_data: {
+        current_price,
+        high_24h,
+        low_24h,
+        price_change_percentage_24h,
+      },
+    },
   } = route.params;
 
   useEffect(() => {
@@ -29,8 +39,27 @@ const CurrencyScreen = ({navigation, route}: Props) => {
   });
 
   return (
-    <View>
-      <Text>Currency screen</Text>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: appStyles.colors.backgroundMain,
+        padding: 12,
+        paddingTop: 18,
+        flexDirection: 'row',
+      }}>
+      <>
+        <Text
+          style={{
+            fontFamily: appStyles.fonts.semiBold,
+            fontSize: 28,
+            color: appStyles.colors.textMain,
+          }}>
+          € {coinPriceToLocaleString(current_price.eur)}
+        </Text>
+      </>
+      <View style={{borderRadius: 10, padding: 6}}>
+        <Text>{price_change_percentage_24h}</Text>
+      </View>
     </View>
   );
 };
