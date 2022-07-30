@@ -16,6 +16,7 @@ import getCurrencies from 'services/getCurrencies';
 import {storeCoins} from 'store/dataSlice';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import sortByProperty from 'util/arrays/sortByProperty';
+import {setIsLoading} from 'store/appSlice';
 
 interface TitleProps {
   text: string;
@@ -47,12 +48,16 @@ const CoinsList: React.FC = () => {
       return;
     }
 
+    dispatch(setIsLoading(true));
+
     const response = await getCurrencies();
 
     if (response.status === 200) {
       dispatch(storeCoins(response.data));
       setData(response.data);
     }
+
+    dispatch(setIsLoading(false));
   };
 
   useEffect(() => {
@@ -99,6 +104,14 @@ const CoinsList: React.FC = () => {
 
   const renderItem = ({item}: {item: Coin}) => <CoinListItem item={item} />;
 
+  const getItemLayout = (_data: any, index: number) => ({
+    length: 52,
+    offset: 52 * index,
+    index,
+  });
+
+  const keyExtractor = (item: Coin) => item.id;
+
   return (
     <View style={{width: CONTENT_WIDTH}}>
       <SearchBar onChange={handleSearch} />
@@ -109,7 +122,12 @@ const CoinsList: React.FC = () => {
           onPress={() => sortBy('market_cap_change_percentage_24h')}
         />
       </View>
-      <FlatList data={data} renderItem={renderItem} />
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        getItemLayout={getItemLayout}
+        keyExtractor={keyExtractor}
+      />
     </View>
   );
 };

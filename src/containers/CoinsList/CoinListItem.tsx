@@ -17,6 +17,7 @@ import {useAppDispatch, useAppSelector} from 'store/hooks';
 import CoinDetails from 'models/CoinDetails';
 import {addCoinDetails} from 'store/dataSlice';
 import PriceChangeIndicator from 'containers/PriceChangeIndicator';
+import {setIsLoading} from 'store/appSlice';
 
 interface Props {
   item: Coin;
@@ -61,12 +62,16 @@ const CoinListItem: React.FC<Props> = ({item}) => {
       return;
     }
 
+    dispatch(setIsLoading(true));
+
     const response = await getCurrency(item.id);
 
     if (response.status === 200) {
       goToCurrencyScreen(response.data);
       dispatch(addCoinDetails(response.data));
     }
+
+    dispatch(setIsLoading(false));
   };
 
   const goToCurrencyScreen = (coinDetails: CoinDetails) => {
