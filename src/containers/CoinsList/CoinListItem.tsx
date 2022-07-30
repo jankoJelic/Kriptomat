@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import Divider from 'components/Divider';
 import Triangle from 'components/Triangle';
+import getCurrency from 'services/getCurrency';
+import useMyNavigation from 'hooks/useMyNavigation';
 
 interface Props {
   item: Coin;
@@ -18,6 +20,8 @@ interface Props {
 
 const CoinListItem: React.FC<Props> = ({item}) => {
   const {width} = useWindowDimensions();
+  const navigation = useMyNavigation();
+
   const last24HoursChange = item.market_cap_change_percentage_24h;
   const negativeChange = last24HoursChange < 0;
   const changeColor = negativeChange
@@ -57,8 +61,15 @@ const CoinListItem: React.FC<Props> = ({item}) => {
     </View>
   );
 
+  const handleOnPressCurrency = async () => {
+    const response = await getCurrency(item.id);
+
+    if (response.status === 200)
+      navigation.navigate('Currency', {coinDetails: response.data});
+  };
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handleOnPressCurrency}>
       <CoinInfo />
       <CoinPrice />
       <Divider />
