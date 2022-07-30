@@ -34,7 +34,7 @@ const CoinsList: React.FC = () => {
   const dispatch = useAppDispatch();
   const {width} = useWindowDimensions();
 
-  const [data, setData] = useState<Coin[]>(coins);
+  const [data, setData] = useState<Coin[]>([]);
   const [searchInput, setSearchInput] = useState('');
   const [sorted, setSorted] = useState({
     by: '',
@@ -44,7 +44,10 @@ const CoinsList: React.FC = () => {
   const fetchData = async () => {
     const response = await getCurrencies();
 
-    if (response.status === 200) dispatch(storeCoins(response.data));
+    if (response.status === 200) {
+      dispatch(storeCoins(response.data));
+      setData(response.data);
+    }
   };
 
   useEffect(() => {
