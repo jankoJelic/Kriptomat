@@ -12,11 +12,11 @@ import Divider from 'components/Divider';
 import getCurrency from 'services/getCurrency';
 import useMyNavigation from 'hooks/useMyNavigation';
 import CurrencyImage from 'components/images/CurrencyImage';
-import Icon from 'react-native-vector-icons/Entypo';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import CoinDetails from 'models/CoinDetails';
 import {addCoinDetails} from 'store/dataSlice';
+import PriceChangeIndicator from 'containers/PriceChangeIndicator';
 
 interface Props {
   item: Coin;
@@ -29,10 +29,6 @@ const CoinListItem: React.FC<Props> = ({item}) => {
   const dispatch = useAppDispatch();
 
   const last24HoursChange = item.market_cap_change_percentage_24h;
-  const negativeChange = last24HoursChange < 0;
-  const changeColor = negativeChange
-    ? appStyles.colors.redNegative
-    : appStyles.colors.greenPositive;
 
   const CoinInfo = () => (
     <View style={styles.row}>
@@ -53,26 +49,7 @@ const CoinListItem: React.FC<Props> = ({item}) => {
       <Text style={styles.priceText}>
         €{coinPriceToLocaleString(item.current_price)}
       </Text>
-      <View style={styles.row}>
-        <Icon
-          name={negativeChange ? 'triangle-down' : 'triangle-up'}
-          size={18}
-          color={
-            negativeChange
-              ? appStyles.colors.redNegative
-              : appStyles.colors.greenPositive
-          }
-          style={{top: 1}}
-        />
-
-        <Text
-          style={{
-            fontFamily: appStyles.fonts.regular,
-            color: changeColor,
-          }}>
-          {last24HoursChange.toFixed(2)}%
-        </Text>
-      </View>
+      <PriceChangeIndicator value={last24HoursChange} />
     </View>
   );
 
@@ -121,7 +98,7 @@ const styles = StyleSheet.create({
     color: appStyles.colors.textMain,
   },
   priceContainer: {alignItems: 'flex-end'},
-  row: {flexDirection: 'row'},
+  row: {flexDirection: 'row', alignItems: 'center'},
 });
 
 export default CoinListItem;

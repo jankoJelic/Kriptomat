@@ -6,10 +6,11 @@ const colors = {
   textGrey: '#707070',
   greenPositive: '#0DEAA9',
   redNegative: '#FF9696',
+  redNegativeLight: '#FFF1EA',
   white: '#FFFFFF',
   black: '#000000',
   greenPositivePastel: '#3fa581',
-  greenPositivePastelLight: '#4CB294',
+  greenPositivePastelLight: '#d3ede5',
 };
 
 const fonts = {
@@ -19,7 +20,7 @@ const fonts = {
   bold: 'Montserrat-Bold',
 };
 
-const roundness = 6;
+const roundness = 8;
 
 const appStyles = {
   colors,

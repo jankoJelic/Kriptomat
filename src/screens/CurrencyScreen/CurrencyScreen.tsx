@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 import HeaderBackArrow from 'components/icons/HeaderBackArrow';
+import PriceChangeIndicator from 'containers/PriceChangeIndicator';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
@@ -51,9 +52,13 @@ const CurrencyScreen = ({navigation, route}: Props) => {
         backgroundColor: appStyles.colors.backgroundMain,
         padding: 12,
         paddingTop: 18,
-        flexDirection: 'row',
       }}>
-      <>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
         <Text
           style={{
             fontFamily: appStyles.fonts.semiBold,
@@ -62,9 +67,10 @@ const CurrencyScreen = ({navigation, route}: Props) => {
           }}>
           € {coinPriceToLocaleString(current_price.eur)}
         </Text>
-      </>
-      <View style={{borderRadius: 10, padding: 6}}>
-        <Text>{price_change_percentage_24h}</Text>
+        <PriceChangeIndicator
+          pastelColors
+          value={price_change_percentage_24h}
+        />
       </View>
     </View>
   );
