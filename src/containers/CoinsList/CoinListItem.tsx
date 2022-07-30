@@ -16,8 +16,8 @@ const CoinListItem: React.FC<Props> = ({item}) => {
     ? appStyles.colors.redNegative
     : appStyles.colors.greenPositive;
 
-  const CoinName = () => (
-    <View style={{flexDirection: 'row'}}>
+  const CoinInfo = () => (
+    <View style={styles.row}>
       <Image source={{uri: item.image}} style={styles.image} />
       <View style={{maxWidth: 130}}>
         <Text numberOfLines={1} style={styles.nameText}>
@@ -31,9 +31,9 @@ const CoinListItem: React.FC<Props> = ({item}) => {
   );
 
   const CoinPrice = () => (
-    <View style={{width: 200, alignItems: 'flex-end'}}>
+    <View style={styles.priceContainer}>
       <Text style={styles.priceText}>€{item.current_price}</Text>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.row}>
         <Triangle
           color={changeColor}
           direction={negativeChange ? 'down' : 'up'}
@@ -51,7 +51,7 @@ const CoinListItem: React.FC<Props> = ({item}) => {
 
   return (
     <TouchableOpacity style={styles.container}>
-      <CoinName />
+      <CoinInfo />
       <CoinPrice />
       <Divider />
     </TouchableOpacity>
@@ -74,6 +74,8 @@ const styles = StyleSheet.create({
     fontFamily: appStyles.fonts.semiBold,
     color: appStyles.colors.textMain,
   },
+  priceContainer: {width: 200, alignItems: 'flex-end'},
+  row: {flexDirection: 'row'},
 });
 
 export default CoinListItem;
