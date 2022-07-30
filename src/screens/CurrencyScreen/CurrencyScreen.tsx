@@ -3,7 +3,7 @@ import CurrencyImage from 'components/images/CurrencyImage';
 import NavTitle from 'components/text/NavTitle';
 import RootStackParamList from 'models/RootStackParams';
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
@@ -45,35 +45,57 @@ const CurrencyScreen = ({navigation, route}: Props) => {
     });
   });
 
+  const PriceAndChange = () => (
+    <View style={styles.topView}>
+      <Text style={styles.priceText}>
+        € {coinPriceToLocaleString(current_price.eur)}
+      </Text>
+      <PriceChangeIndicator pastelColors value={price_change_percentage_24h} />
+    </View>
+  );
+
+  const LowHighText = ({title = '', value = 0}) => (
+    <Text style={{fontFamily: appStyles.fonts.regular, marginRight: 20}}>
+      {title}
+      {' € '}
+      <Text style={{fontFamily: appStyles.fonts.semiBold}}>
+        {coinPriceToLocaleString(value)}
+      </Text>
+    </Text>
+  );
+
+  const LowHighTexts = () => (
+    <View style={{marginTop: 10, flexDirection: 'row'}}>
+      <LowHighText title="24h Low" value={low_24h.eur} />
+      <LowHighText title="24h High" value={high_24h.eur} />
+    </View>
+  );
+
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: appStyles.colors.backgroundMain,
-        padding: 12,
-        paddingTop: 18,
-      }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Text
-          style={{
-            fontFamily: appStyles.fonts.semiBold,
-            fontSize: 28,
-            color: appStyles.colors.textMain,
-          }}>
-          € {coinPriceToLocaleString(current_price.eur)}
-        </Text>
-        <PriceChangeIndicator
-          pastelColors
-          value={price_change_percentage_24h}
-        />
-      </View>
+    <View style={styles.screen}>
+      <PriceAndChange />
+      <LowHighTexts />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: appStyles.colors.backgroundMain,
+    padding: 12,
+    paddingTop: 18,
+  },
+  topView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  priceText: {
+    fontFamily: appStyles.fonts.semiBold,
+    fontSize: 28,
+    color: appStyles.colors.textMain,
+  },
+});
 
 export default CurrencyScreen;

@@ -10,7 +10,7 @@ const colors = {
   white: '#FFFFFF',
   black: '#000000',
   greenPositivePastel: '#3fa581',
-  greenPositivePastelLight: '#d3ede5',
+  greenPositivePastelLight: '#bddbd2',
 };
 
 const fonts = {

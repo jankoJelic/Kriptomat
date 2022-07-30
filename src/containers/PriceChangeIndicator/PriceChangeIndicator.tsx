@@ -10,8 +10,9 @@ const PriceChangeIndicator = ({value = 0, pastelColors = false}) => {
       style={{
         ...styles.row,
         ...(pastelColors && {
-          borderRadius: 8,
-          padding: appStyles.roundness,
+          borderRadius: appStyles.roundness,
+          paddingHorizontal: 8,
+          paddingVertical: 6,
           backgroundColor:
             value < 0
               ? appStyles.colors.redNegativeLight
