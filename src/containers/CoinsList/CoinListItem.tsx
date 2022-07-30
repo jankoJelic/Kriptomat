@@ -1,7 +1,14 @@
 import appStyles from 'constants/appStyles';
 import Coin from 'models/Coin';
 import React from 'react';
-import {TouchableOpacity, Image, View, Text, StyleSheet} from 'react-native';
+import {
+  TouchableOpacity,
+  Image,
+  View,
+  Text,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import Divider from 'components/Divider';
 import Triangle from 'components/Triangle';
 
@@ -10,6 +17,7 @@ interface Props {
 }
 
 const CoinListItem: React.FC<Props> = ({item}) => {
+  const {width} = useWindowDimensions();
   const last24HoursChange = item.market_cap_change_percentage_24h;
   const negativeChange = last24HoursChange < 0;
   const changeColor = negativeChange
@@ -19,7 +27,7 @@ const CoinListItem: React.FC<Props> = ({item}) => {
   const CoinInfo = () => (
     <View style={styles.row}>
       <Image source={{uri: item.image}} style={styles.image} />
-      <View style={{maxWidth: 130}}>
+      <View style={{maxWidth: width / 2.2}}>
         <Text numberOfLines={1} style={styles.nameText}>
           {item.name}
         </Text>
@@ -74,7 +82,7 @@ const styles = StyleSheet.create({
     fontFamily: appStyles.fonts.semiBold,
     color: appStyles.colors.textMain,
   },
-  priceContainer: {width: 200, alignItems: 'flex-end'},
+  priceContainer: {alignItems: 'flex-end'},
   row: {flexDirection: 'row'},
 });
 
