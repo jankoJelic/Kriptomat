@@ -6,6 +6,7 @@ import {
   View,
   Easing,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import {useAppSelector} from 'store/hooks';
 import lowerColorOpacity from 'util/colors/lowerColorOpacity';
@@ -35,12 +36,7 @@ const FullScreenLoadingSpinner = () => {
 
   return (
     visible && (
-      <View
-        style={{
-          ...styles.container,
-          width,
-          height,
-        }}>
+      <View style={styles.container}>
         <Animated.View
           style={{
             transform: [{rotate: spin}, {scale: 0.55}],
@@ -63,6 +59,8 @@ const styles = StyleSheet.create({
       hex: appStyles.colors.brand,
       opacity: 0.3,
     }),
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });
 

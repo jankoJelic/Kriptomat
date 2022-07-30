@@ -9,6 +9,7 @@ import appStyles from 'constants/appStyles';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 import HeaderBackArrow from 'components/icons/HeaderBackArrow';
 import PriceChangeIndicator from 'containers/PriceChangeIndicator';
+import CurrencyLineChart from 'components/charts/CurrencyLineChart';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
@@ -75,6 +76,7 @@ const CurrencyScreen = ({navigation, route}: Props) => {
     <View style={styles.screen}>
       <PriceAndChange />
       <LowHighTexts />
+      <CurrencyLineChart />
     </View>
   );
 };
