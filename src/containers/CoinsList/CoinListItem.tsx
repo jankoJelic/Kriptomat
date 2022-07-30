@@ -3,7 +3,6 @@ import Coin from 'models/Coin';
 import React from 'react';
 import {
   TouchableOpacity,
-  Image,
   View,
   Text,
   StyleSheet,
@@ -13,6 +12,7 @@ import Divider from 'components/Divider';
 import Triangle from 'components/Triangle';
 import getCurrency from 'services/getCurrency';
 import useMyNavigation from 'hooks/useMyNavigation';
+import CurrencyImage from 'components/images/CurrencyImage';
 
 interface Props {
   item: Coin;
@@ -30,7 +30,7 @@ const CoinListItem: React.FC<Props> = ({item}) => {
 
   const CoinInfo = () => (
     <View style={styles.row}>
-      <Image source={{uri: item.image}} style={styles.image} />
+      <CurrencyImage uri={item.image} />
       <View style={{maxWidth: width / 2.2}}>
         <Text numberOfLines={1} style={styles.nameText}>
           {item.name}
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 10,
   },
-  image: {width: 32, aspectRatio: 1, marginRight: 10},
   nameText: {
     fontFamily: appStyles.fonts.semiBold,
     color: appStyles.colors.textMain,

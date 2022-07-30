@@ -14,6 +14,7 @@ const fonts = {
   regular: 'Montserrat-Regular',
   thin: 'Montserrat-Thin',
   semiBold: 'Montserrat-SemiBold',
+  bold: 'Montserrat-Bold',
 };
 
 const roundness = 6;

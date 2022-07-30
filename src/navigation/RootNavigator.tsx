@@ -4,6 +4,7 @@ import RootStackParamList from 'models/RootStackParams';
 import React from 'react';
 import CurrencyScreen from 'screens/CurrencyScreen';
 import HomeScreen from 'screens/HomeScreen';
+import HeaderBackArrow from 'components/icons/HeaderBackArrow';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -16,7 +17,14 @@ const RootNavigator = () => {
           component={HomeScreen}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="Currency" component={CurrencyScreen} />
+        <Stack.Screen
+          name="Currency"
+          component={CurrencyScreen}
+          options={{
+            headerLeft: () => <HeaderBackArrow />,
+            headerBackVisible: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
