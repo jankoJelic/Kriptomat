@@ -1,5 +1,5 @@
 import appStyles from 'constants/appStyles';
-import Coin from 'models/Coin';
+import Coin from 'types/Coin';
 import React from 'react';
 import {
   TouchableOpacity,
@@ -14,10 +14,11 @@ import useMyNavigation from 'hooks/useMyNavigation';
 import CurrencyImage from 'components/images/CurrencyImage';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
-import CoinDetails from 'models/CoinDetails';
+import CoinDetails from 'types/CoinDetails';
 import {addCoinDetails} from 'store/dataSlice';
 import PriceChangeIndicator from 'containers/PriceChangeIndicator';
 import {setIsLoading} from 'store/appSlice';
+import {CURRENCY_SYMBOL} from 'constants/currency';
 
 interface Props {
   item: Coin;
@@ -48,7 +49,7 @@ const CoinListItem: React.FC<Props> = ({item}) => {
   const CoinPrice = () => (
     <View style={styles.priceContainer}>
       <Text style={styles.priceText}>
-        €{coinPriceToLocaleString(item.current_price)}
+        {CURRENCY_SYMBOL + coinPriceToLocaleString(item.current_price)}
       </Text>
       <PriceChangeIndicator value={last24HoursChange} />
     </View>

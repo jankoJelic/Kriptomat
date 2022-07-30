@@ -2,7 +2,7 @@ import SearchBar from 'components/inputs/SearchBar';
 import SortIcon from 'components/icons/SortIcon';
 import appStyles from 'constants/appStyles';
 import CoinListItem from 'containers/CoinsList/CoinListItem';
-import Coin from 'models/Coin';
+import Coin from 'types/Coin';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,

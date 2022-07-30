@@ -1,7 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CurrencyImage from 'components/images/CurrencyImage';
 import NavTitle from 'components/text/NavTitle';
-import RootStackParamList from 'models/RootStackParams';
+import RootStackParamList from 'types/RootStackParams';
 import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
@@ -10,12 +10,14 @@ import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 import HeaderBackArrow from 'components/icons/HeaderBackArrow';
 import PriceChangeIndicator from 'containers/PriceChangeIndicator';
 import CurrencyLineChart from 'components/charts/CurrencyLineChart';
+import {CURRENCY_SYMBOL} from 'constants/currency';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
 const CurrencyScreen = ({navigation, route}: Props) => {
   const {
     coinDetails: {
+      id,
       name,
       image,
       market_data: {
@@ -45,7 +47,7 @@ const CurrencyScreen = ({navigation, route}: Props) => {
   const PriceAndChange = () => (
     <View style={styles.topView}>
       <Text style={styles.priceText}>
-        € {coinPriceToLocaleString(current_price.eur)}
+        {CURRENCY_SYMBOL + coinPriceToLocaleString(current_price.eur)}
       </Text>
       <PriceChangeIndicator pastelColors value={price_change_percentage_24h} />
     </View>
@@ -53,8 +55,7 @@ const CurrencyScreen = ({navigation, route}: Props) => {
 
   const LowHighText = ({title = '', value = 0}) => (
     <Text style={{fontFamily: appStyles.fonts.regular, marginRight: 20}}>
-      {title}
-      {' € '}
+      {title + ' ' + CURRENCY_SYMBOL + ' '}
       <Text style={{fontFamily: appStyles.fonts.semiBold}}>
         {coinPriceToLocaleString(value)}
       </Text>
@@ -72,18 +73,7 @@ const CurrencyScreen = ({navigation, route}: Props) => {
     <View style={styles.screen}>
       <PriceAndChange />
       <LowHighTexts />
-      <CurrencyLineChart />
-      <View style={styles.row}>
-        <Pressable onPress={() => console.log('pressed')}>
-          <Text
-            style={{
-              fontFamily: appStyles.fonts.regular,
-              color: appStyles.colors.actionBlue,
-            }}>
-            24h
-          </Text>
-        </Pressable>
-      </View>
+      <CurrencyLineChart id={id} />
     </View>
   );
 };

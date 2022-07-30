@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import RootStackParamList from 'models/RootStackParams';
+import RootStackParamList from 'types/RootStackParams';
 import React from 'react';
 import CurrencyScreen from 'screens/CurrencyScreen';
 import HomeScreen from 'screens/HomeScreen';

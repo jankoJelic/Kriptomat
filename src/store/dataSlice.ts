@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
-import Coin from 'models/Coin';
-import CoinDetails from 'models/CoinDetails';
+import Coin from 'types/Coin';
+import CoinDetails from 'types/CoinDetails';
 
 export const dataSlice = createSlice({
   name: 'dataSlice',
