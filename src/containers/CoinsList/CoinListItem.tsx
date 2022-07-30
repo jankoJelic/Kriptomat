@@ -8,7 +8,7 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
-import Divider from 'components/Divider';
+import Divider from 'components/UI/Divider';
 import getCurrency from 'services/getCurrency';
 import useMyNavigation from 'hooks/useMyNavigation';
 import CurrencyImage from 'components/images/CurrencyImage';

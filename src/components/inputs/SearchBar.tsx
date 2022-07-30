@@ -18,7 +18,7 @@ const SearchBar: React.FC<Props> = ({onChange}) => {
 
   return (
     <View style={{marginVertical: 10}}>
-      <Shadow startColor="#ededed">
+      <Shadow startColor={appStyles.colors.shadowStartColor}>
         <View style={styles.container}>
           <Icon name="search" color={appStyles.colors.textGrey} size={20} />
           <TextInput

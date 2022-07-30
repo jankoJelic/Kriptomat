@@ -1,5 +1,5 @@
-import SearchBar from 'components/SearchBar';
-import SortIcon from 'components/SortIcon';
+import SearchBar from 'components/inputs/SearchBar';
+import SortIcon from 'components/icons/SortIcon';
 import appStyles from 'constants/appStyles';
 import CoinListItem from 'containers/CoinsList/CoinListItem';
 import Coin from 'models/Coin';

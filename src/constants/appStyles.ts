@@ -11,6 +11,8 @@ const colors = {
   black: '#000000',
   greenPositivePastel: '#3fa581',
   greenPositivePastelLight: '#bddbd2',
+  actionBlue: '#0E80D5',
+  shadowStartColor: '#ededed',
 };
 
 const fonts = {
