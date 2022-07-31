@@ -1,5 +1,4 @@
 import store from 'store';
-import {addCurrencyDisplayInfos} from 'store/currencyOverviewSlice';
 
 const getCurrencyInfoByInterval = () => {
   const state = store.getState();
