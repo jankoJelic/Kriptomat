@@ -13,8 +13,8 @@ import CurrencyLineChart from 'components/charts/CurrencyLineChart';
 import {CURRENCY_SYMBOL} from 'constants/currency';
 import MainButton from 'components/buttons/MainButton';
 import {useAppSelector} from 'store/hooks';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import OverviewTable from './OverviewTable';
+import countDecimals from 'util/numbers/countDecimalPlaces';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
@@ -80,15 +80,28 @@ const CurrencyScreen = ({navigation, route}: Props) => {
     value = 0,
   }: {
     title: string;
-    value: string | number;
-  }) => (
-    <Text style={{fontFamily: appStyles.fonts.regular, marginRight: 20}}>
-      {title + ' ' + CURRENCY_SYMBOL + ' '}
-      <Text style={{fontFamily: appStyles.fonts.semiBold}}>
-        {coinPriceToLocaleString(value)}
+    value: number | string;
+  }) => {
+    const outputValue = () => {
+      if (typeof value === 'number') {
+        const decimalNumbers = countDecimals(value);
+        return decimalNumbers > 5
+          ? coinPriceToLocaleString(value.toFixed(5))
+          : coinPriceToLocaleString(value);
+      } else {
+        return value;
+      }
+    };
+
+    return (
+      <Text style={{fontFamily: appStyles.fonts.regular, marginRight: 20}}>
+        {title + ' ' + CURRENCY_SYMBOL + ' '}
+        <Text style={{fontFamily: appStyles.fonts.semiBold}}>
+          {outputValue()}
+        </Text>
       </Text>
-    </Text>
-  );
+    );
+  };
 
   const LowHighTexts = () => (
     <View style={{marginTop: 10, flexDirection: 'row'}}>
