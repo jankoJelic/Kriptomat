@@ -2,7 +2,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CurrencyImage from 'components/images/CurrencyImage';
 import NavTitle from 'components/text/NavTitle';
 import RootStackParamList from 'types/RootStackParams';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
@@ -15,10 +15,14 @@ import MainButton from 'components/buttons/MainButton';
 import {useAppSelector} from 'store/hooks';
 import OverviewTable from './OverviewTable';
 import countDecimals from 'util/numbers/countDecimalPlaces';
+import CoinsList from 'containers/CoinsList';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
+type ScreenMode = 'view' | 'search';
+
 const CurrencyScreen = ({navigation, route}: Props) => {
+  const [screenMode, setScreenMode] = useState<ScreenMode>('view');
   const {
     coinDetails: {
       id,
@@ -45,10 +49,10 @@ const CurrencyScreen = ({navigation, route}: Props) => {
   const prices = useAppSelector(state => state.currencyOverviewSlice.data);
 
   useEffect(() => {
-    setHeaderOptions();
+    setViewHeaderOptions();
   }, []);
 
-  const setHeaderOptions = () => {
+  const setViewHeaderOptions = () => {
     navigation.setOptions({
       headerLeft: () => (
         <View style={styles.row}>
@@ -58,8 +62,24 @@ const CurrencyScreen = ({navigation, route}: Props) => {
         </View>
       ),
       headerRight: () => (
-        <Icon name="search" color={appStyles.colors.textMain} size={24} />
+        <Icon
+          name="search"
+          color={appStyles.colors.textMain}
+          size={24}
+          onPress={onPressSearch}
+        />
       ),
+      headerTitle: () => <></>,
+    });
+  };
+
+  const onPressSearch = () => {
+    setScreenMode('search');
+
+    navigation.setOptions({
+      headerLeft: () => <HeaderBackArrow />,
+      headerRight: () => <></>,
+      headerTitle: () => <NavTitle text="Search" />,
     });
   };
 
@@ -175,27 +195,37 @@ const CurrencyScreen = ({navigation, route}: Props) => {
   };
 
   return (
-    <ScrollView style={styles.screen}>
-      <PriceAndChange />
-      <LowHighTexts />
-      <CurrencyLineChart currencyId={id} />
-      <MainButton text={`Buy, Sell or Exchange ${name}`} />
-      <Text style={styles.overviewText}>Overview</Text>
-      <OverviewTable
-        firstCellTitle="Volume(1d):"
-        firstCellValue={
-          CURRENCY_SYMBOL + coinPriceToLocaleString(total_volume.eur)
-        }
-        secondCellTitle="Market cap:"
-        secondCellValue={
-          CURRENCY_SYMBOL + coinPriceToLocaleString(market_cap.eur)
-        }
-        thirdCellTitle="Circulating supply:"
-        thirdCellValue={
-          coinPriceToLocaleString(total_volume.eur) + ' ' + symbol.toUpperCase()
-        }
-      />
-    </ScrollView>
+    <>
+      {screenMode === 'view' ? (
+        <ScrollView style={styles.screen}>
+          <PriceAndChange />
+          <LowHighTexts />
+          <CurrencyLineChart currencyId={id} />
+          <MainButton text={`Buy, Sell or Exchange ${name}`} />
+          <Text style={styles.overviewText}>Overview</Text>
+          <OverviewTable
+            firstCellTitle="Volume(1d):"
+            firstCellValue={
+              CURRENCY_SYMBOL + coinPriceToLocaleString(total_volume.eur)
+            }
+            secondCellTitle="Market cap:"
+            secondCellValue={
+              CURRENCY_SYMBOL + coinPriceToLocaleString(market_cap.eur)
+            }
+            thirdCellTitle="Circulating supply:"
+            thirdCellValue={
+              coinPriceToLocaleString(total_volume.eur) +
+              ' ' +
+              symbol.toUpperCase()
+            }
+          />
+        </ScrollView>
+      ) : (
+        <View style={{alignItems: 'center'}}>
+          <CoinsList />
+        </View>
+      )}
+    </>
   );
 };
 

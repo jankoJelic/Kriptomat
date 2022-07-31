@@ -6,9 +6,10 @@ import {Shadow} from 'react-native-shadow-2';
 
 interface Props {
   onChange: (txt: string) => void;
+  onClear: () => void;
 }
 
-const SearchBar: React.FC<Props> = ({onChange}) => {
+const SearchBar: React.FC<Props> = ({onChange, onClear}) => {
   const [input, setInput] = useState('');
 
   const handleInputChange = (txt: string) => {
@@ -30,7 +31,10 @@ const SearchBar: React.FC<Props> = ({onChange}) => {
             name="x"
             size={20}
             color={appStyles.colors.textGrey}
-            onPress={() => setInput('')}
+            onPress={() => {
+              setInput('');
+              onClear();
+            }}
           />
         </View>
       </Shadow>

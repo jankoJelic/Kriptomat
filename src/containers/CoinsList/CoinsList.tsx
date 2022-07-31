@@ -114,7 +114,7 @@ const CoinsList: React.FC = () => {
 
   return (
     <View style={{width: CONTENT_WIDTH}}>
-      <SearchBar onChange={handleSearch} />
+      <SearchBar onChange={handleSearch} onClear={() => setData(coins)} />
       <View style={styles.headerContainer}>
         <HeaderTitle text="Coin" onPress={() => sortBy('name')} />
         <HeaderTitle
