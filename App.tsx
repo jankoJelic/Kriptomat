@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {SafeAreaView} from 'react-native';
-import appStyles from './src/constants/appStyles';
+import {View} from 'react-native';
 import RootNavigator from './src/navigation/RootNavigator';
 import MyStatusBar from './src/components/UI/MyStatusBar';
 import {Provider} from 'react-redux';
@@ -10,15 +9,14 @@ import ButtonFooter from './src/containers/ButtonFooter';
 
 const App = () => {
   return (
-    <SafeAreaView
-      style={{flex: 1, backgroundColor: appStyles.colors.backgroundMain}}>
+    <View style={{flex: 1}}>
       <Provider store={store}>
         <MyStatusBar />
         <RootNavigator />
         <ButtonFooter />
         <FullScreenLoadingSpinner />
       </Provider>
-    </SafeAreaView>
+    </View>
   );
 };
 

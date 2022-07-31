@@ -68,7 +68,7 @@ const CurrencyLineChart = ({id = ''}) => {
           withHorizontalLabels={false}
           withVerticalLines={false}
           withHorizontalLines
-          fromZero
+          fromZero={false}
           withDots={false}
         />
         <View style={styles.xAxis} />

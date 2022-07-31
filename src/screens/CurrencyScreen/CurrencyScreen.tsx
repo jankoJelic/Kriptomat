@@ -3,7 +3,7 @@ import CurrencyImage from 'components/images/CurrencyImage';
 import NavTitle from 'components/text/NavTitle';
 import RootStackParamList from 'types/RootStackParams';
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
@@ -11,6 +11,7 @@ import HeaderBackArrow from 'components/icons/HeaderBackArrow';
 import PriceChangeIndicator from 'containers/PriceChangeIndicator';
 import CurrencyLineChart from 'components/charts/CurrencyLineChart';
 import {CURRENCY_SYMBOL} from 'constants/currency';
+import MainButton from 'components/buttons/MainButton';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
@@ -70,18 +71,20 @@ const CurrencyScreen = ({navigation, route}: Props) => {
   );
 
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen}>
       <PriceAndChange />
       <LowHighTexts />
       <CurrencyLineChart id={id} />
-    </View>
+      <MainButton text={`Buy, Sell or Exchange ${name}`} />
+      <Text style={styles.overviewText}>Overview</Text>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: appStyles.colors.backgroundMain,
+    backgroundColor: appStyles.colors.white,
     padding: 12,
     paddingTop: 18,
   },
@@ -98,6 +101,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  overviewText: {
+    fontFamily: appStyles.fonts.semiBold,
+    fontSize: 20,
+    marginTop: 30,
   },
 });
 

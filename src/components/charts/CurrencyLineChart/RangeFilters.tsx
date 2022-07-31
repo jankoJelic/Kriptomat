@@ -25,6 +25,7 @@ const RangeFilters: React.FC<Props> = ({activeFilter, onPressFilter}) => {
 
         return (
           <TouchableOpacity
+            key={f.id.toString() + f.title}
             onPress={() => onPressFilter({days: f.interval, filterId: f.id})}
             style={{
               ...styles.container,
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 8,
     borderRadius: 14,
+    marginBottom: 26,
   },
   row: {
     flexDirection: 'row',

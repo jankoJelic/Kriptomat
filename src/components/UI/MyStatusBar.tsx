@@ -9,34 +9,22 @@ import {
 } from 'react-native';
 
 const MyStatusBar = () => (
-  <View style={[styles.statusBar, {backgroundColor: appStyles.colors.brand}]}>
-    <SafeAreaView>
+  <View style={styles.statusBar}>
+    <SafeAreaView style={{backgroundColor: appStyles.colors.brand}}>
       <StatusBar
         translucent
         backgroundColor={appStyles.colors.brand}
         barStyle="light-content"
+        animated
       />
     </SafeAreaView>
   </View>
 );
 
-const STATUSBAR_HEIGHT = StatusBar.currentHeight;
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   statusBar: {
-    height: STATUSBAR_HEIGHT,
-  },
-  appBar: {
-    backgroundColor: '#79B45D',
-    height: APPBAR_HEIGHT,
-  },
-  content: {
-    flex: 1,
-    backgroundColor: '#33373B',
+    height: StatusBar.currentHeight,
+    backgroundColor: appStyles.colors.brand,
   },
 });
 

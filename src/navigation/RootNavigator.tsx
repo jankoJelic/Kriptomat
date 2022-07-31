@@ -15,7 +15,7 @@ const RootNavigator = () => {
       <Stack.Navigator
         screenOptions={{
           headerShadowVisible: false,
-          headerStyle: {backgroundColor: appStyles.colors.backgroundMain},
+          headerStyle: {backgroundColor: appStyles.colors.white},
         }}>
         <Stack.Screen
           name="Home"
