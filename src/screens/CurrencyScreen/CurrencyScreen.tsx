@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 import HeaderBackArrow from 'components/icons/HeaderBackArrow';
-import PriceChangeIndicator from 'containers/PriceChangeIndicator';
 import CurrencyLineChart from 'components/charts/CurrencyLineChart';
 import {CURRENCY_SYMBOL} from 'constants/currency';
 import MainButton from 'components/buttons/MainButton';
@@ -17,7 +16,7 @@ import OverviewTable from './OverviewTable';
 import CoinsList from 'containers/CoinsList';
 import {setCurrencyScreenMode} from 'store/currencyOverviewSlice';
 import LowHighTexts from './LowHighTexts';
-import getCurrencyInfoByInterval from './getCurrencyInfoByInterval';
+import PriceAndChange from './PriceAndChange';
 
 const CurrencyScreen: React.FC<Props> = ({navigation}) => {
   const dispatch = useAppDispatch();
@@ -30,7 +29,7 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
     name,
     image,
     symbol,
-    market_data: {current_price, market_cap, total_volume},
+    market_data: {market_cap, total_volume},
   } = currencyInfo;
 
   useEffect(() => {
@@ -87,18 +86,6 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
     dispatch(setCurrencyScreenMode('search'));
   };
 
-  const PriceAndChange = () => (
-    <View style={styles.topView}>
-      <Text style={styles.priceText}>
-        {CURRENCY_SYMBOL + coinPriceToLocaleString(current_price.eur)}
-      </Text>
-      <PriceChangeIndicator
-        pastelColors
-        value={getCurrencyInfoByInterval().priceChangePercentage}
-      />
-    </View>
-  );
-
   return (
     <>
       {screenMode === 'view' ? (
@@ -140,16 +127,6 @@ const styles = StyleSheet.create({
     backgroundColor: appStyles.colors.white,
     padding: 12,
     paddingTop: 18,
-  },
-  topView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  priceText: {
-    fontFamily: appStyles.fonts.semiBold,
-    fontSize: 28,
-    color: appStyles.colors.textMain,
   },
   row: {
     flexDirection: 'row',
