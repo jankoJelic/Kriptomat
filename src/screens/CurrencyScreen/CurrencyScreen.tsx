@@ -85,8 +85,8 @@ const CurrencyScreen = ({navigation, route}: Props) => {
     const outputValue = () => {
       if (typeof value === 'number') {
         const decimalNumbers = countDecimals(value);
-        return decimalNumbers > 5
-          ? coinPriceToLocaleString(value.toFixed(5))
+        return decimalNumbers > 6
+          ? coinPriceToLocaleString(value.toFixed(6))
           : coinPriceToLocaleString(value);
       } else {
         return value;
