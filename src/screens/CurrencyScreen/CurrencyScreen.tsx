@@ -13,6 +13,8 @@ import CurrencyLineChart from 'components/charts/CurrencyLineChart';
 import {CURRENCY_SYMBOL} from 'constants/currency';
 import MainButton from 'components/buttons/MainButton';
 import {useAppSelector} from 'store/hooks';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import OverviewTable from './OverviewTable';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
@@ -22,6 +24,7 @@ const CurrencyScreen = ({navigation, route}: Props) => {
       id,
       name,
       image,
+      symbol,
       market_data: {
         current_price,
         high_24h,
@@ -30,8 +33,8 @@ const CurrencyScreen = ({navigation, route}: Props) => {
         price_change_percentage_7d,
         price_change_percentage_30d,
         price_change_percentage_1y,
-        // market_cap,
-        // total_volume,
+        market_cap,
+        total_volume,
       },
     },
   } = route.params;
@@ -165,6 +168,20 @@ const CurrencyScreen = ({navigation, route}: Props) => {
       <CurrencyLineChart currencyId={id} />
       <MainButton text={`Buy, Sell or Exchange ${name}`} />
       <Text style={styles.overviewText}>Overview</Text>
+      <OverviewTable
+        firstCellTitle="Volume(1d):"
+        firstCellValue={
+          CURRENCY_SYMBOL + coinPriceToLocaleString(total_volume.eur)
+        }
+        secondCellTitle="Market cap:"
+        secondCellValue={
+          CURRENCY_SYMBOL + coinPriceToLocaleString(market_cap.eur)
+        }
+        thirdCellTitle="Circulating supply:"
+        thirdCellValue={
+          coinPriceToLocaleString(total_volume.eur) + ' ' + symbol.toUpperCase()
+        }
+      />
     </ScrollView>
   );
 };
