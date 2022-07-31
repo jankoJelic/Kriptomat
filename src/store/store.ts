@@ -1,11 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
 import appSlice from './appSlice';
 import dataSlice from './dataSlice';
+import currencyOverviewSlice from './currencyOverviewSlice';
 
 const store = configureStore({
   reducer: {
     appSlice,
     dataSlice,
+    currencyOverviewSlice,
   },
 });
 

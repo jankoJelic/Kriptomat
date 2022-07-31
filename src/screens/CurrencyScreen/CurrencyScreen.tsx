@@ -26,6 +26,11 @@ const CurrencyScreen = ({navigation, route}: Props) => {
         high_24h,
         low_24h,
         price_change_percentage_24h,
+        // price_change_percentage_7d,
+        // price_change_percentage_30d,
+        // price_change_percentage_1y,
+        // market_cap,
+        // total_volume,
       },
     },
   } = route.params;
@@ -74,7 +79,7 @@ const CurrencyScreen = ({navigation, route}: Props) => {
     <ScrollView style={styles.screen}>
       <PriceAndChange />
       <LowHighTexts />
-      <CurrencyLineChart id={id} />
+      <CurrencyLineChart currencyId={id} />
       <MainButton text={`Buy, Sell or Exchange ${name}`} />
       <Text style={styles.overviewText}>Overview</Text>
     </ScrollView>

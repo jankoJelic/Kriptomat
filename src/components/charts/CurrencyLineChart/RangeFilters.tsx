@@ -1,19 +1,23 @@
 import appStyles from 'constants/appStyles';
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet, View} from 'react-native';
+import {Filter} from 'store/currencyOverviewSlice';
+import {useAppSelector} from 'store/hooks';
 import filters from './filters';
-import {OnPressRangeFilterProps} from './types';
 
 interface Props {
-  activeFilter: number;
-  onPressFilter: ({days, filterId}: OnPressRangeFilterProps) => void;
+  onPressFilter: (filter: Filter) => void;
 }
 
-const RangeFilters: React.FC<Props> = ({activeFilter, onPressFilter}) => {
+const RangeFilters: React.FC<Props> = ({onPressFilter}) => {
+  const activeFilterId = useAppSelector(
+    state => state.currencyOverviewSlice.activeFilter.id,
+  );
+
   return (
     <View style={styles.row}>
       {filters.map(f => {
-        const isActive = activeFilter === f.id;
+        const isActive = activeFilterId === f.id;
 
         const textColor = isActive
           ? appStyles.colors.white
@@ -26,7 +30,7 @@ const RangeFilters: React.FC<Props> = ({activeFilter, onPressFilter}) => {
         return (
           <TouchableOpacity
             key={f.id.toString() + f.title}
-            onPress={() => onPressFilter({days: f.interval, filterId: f.id})}
+            onPress={() => onPressFilter(f)}
             style={{
               ...styles.container,
               backgroundColor,
