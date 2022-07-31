@@ -14,11 +14,14 @@ import useMyNavigation from 'hooks/useMyNavigation';
 import CurrencyImage from 'components/images/CurrencyImage';
 import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
-import CoinDetails from 'types/CoinDetails';
 import {addCoinDetails} from 'store/dataSlice';
 import PriceChangeIndicator from 'containers/PriceChangeIndicator';
 import {setIsLoading} from 'store/appSlice';
 import {CURRENCY_SYMBOL} from 'constants/currency';
+import {
+  setCurrencyInfo,
+  setCurrencyScreenMode,
+} from 'store/currencyOverviewSlice';
 
 interface Props {
   item: Coin;
@@ -56,27 +59,27 @@ const CoinListItem: React.FC<Props> = ({item}) => {
   );
 
   const handleOnPressCurrency = async () => {
+    dispatch(setIsLoading(true));
     const existingCoin = coinsDetails.find(coin => coin.id === item.id);
 
     if (!!existingCoin) {
-      goToCurrencyScreen(existingCoin);
-      return;
+      dispatch(setCurrencyInfo(existingCoin));
+    } else {
+      await fetchAndSetNewCurrencyData();
     }
-
-    dispatch(setIsLoading(true));
-
-    const response = await getCurrency(item.id);
-
-    if (response.status === 200) {
-      goToCurrencyScreen(response.data);
-      dispatch(addCoinDetails(response.data));
-    }
+    dispatch(setCurrencyScreenMode('view'));
+    navigation.navigate('Currency');
 
     dispatch(setIsLoading(false));
   };
 
-  const goToCurrencyScreen = (coinDetails: CoinDetails) => {
-    navigation.navigate('Currency', {coinDetails});
+  const fetchAndSetNewCurrencyData = async () => {
+    const res = await getCurrency(item.id);
+
+    if (res.status === 200) {
+      dispatch(setCurrencyInfo(res.data));
+      dispatch(addCoinDetails(res.data));
+    }
   };
 
   return (

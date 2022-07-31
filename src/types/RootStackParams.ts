@@ -1,8 +1,6 @@
-import CoinDetails from './CoinDetails';
-
 type RootStackParamList = {
   Home: undefined;
-  Currency: {coinDetails: CoinDetails};
+  Currency: undefined;
 };
 
 export default RootStackParamList;

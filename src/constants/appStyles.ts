@@ -21,6 +21,8 @@ const fonts = {
   thin: 'Montserrat-Thin',
   semiBold: 'Montserrat-SemiBold',
   bold: 'Montserrat-Bold',
+  medium: 'Montserrat-Medium',
+  light: 'Montserrat-Light',
 };
 
 const roundness = 8;

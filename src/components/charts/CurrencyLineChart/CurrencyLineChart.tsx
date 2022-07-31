@@ -16,7 +16,7 @@ import filters from './filters';
 const CurrencyLineChart = ({currencyId = ''}) => {
   const {width} = useWindowDimensions();
   const dispatch = useAppDispatch();
-  const pricesData = useAppSelector(state => state.currencyOverviewSlice.data);
+  const pricesData = useAppSelector(state => state.currencyOverviewSlice.pricesData);
   const [data, setData] = useState<number[]>([0]);
 
   const extractPricesFromResponse = (res: {

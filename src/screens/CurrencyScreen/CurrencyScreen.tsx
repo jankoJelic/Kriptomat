@@ -2,7 +2,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CurrencyImage from 'components/images/CurrencyImage';
 import NavTitle from 'components/text/NavTitle';
 import RootStackParamList from 'types/RootStackParams';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
@@ -12,45 +12,64 @@ import PriceChangeIndicator from 'containers/PriceChangeIndicator';
 import CurrencyLineChart from 'components/charts/CurrencyLineChart';
 import {CURRENCY_SYMBOL} from 'constants/currency';
 import MainButton from 'components/buttons/MainButton';
-import {useAppSelector} from 'store/hooks';
+import {useAppDispatch, useAppSelector} from 'store/hooks';
 import OverviewTable from './OverviewTable';
-import countDecimals from 'util/numbers/countDecimalPlaces';
 import CoinsList from 'containers/CoinsList';
+import {setCurrencyScreenMode} from 'store/currencyOverviewSlice';
+import LowHighText from 'components/text/LowHighText';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
-
-type ScreenMode = 'view' | 'search';
-
-const CurrencyScreen = ({navigation, route}: Props) => {
-  const [screenMode, setScreenMode] = useState<ScreenMode>('view');
-  const {
-    coinDetails: {
-      id,
-      name,
-      image,
-      symbol,
-      market_data: {
-        current_price,
-        high_24h,
-        low_24h,
-        price_change_percentage_24h,
-        price_change_percentage_7d,
-        price_change_percentage_30d,
-        price_change_percentage_1y,
-        market_cap,
-        total_volume,
-      },
-    },
-  } = route.params;
-
-  const activeFilter = useAppSelector(
-    state => state.currencyOverviewSlice.activeFilter,
+const CurrencyScreen: React.FC<Props> = ({navigation}) => {
+  const dispatch = useAppDispatch();
+  const {screenMode, activeFilter, pricesData, currencyInfo} = useAppSelector(
+    state => state.currencyOverviewSlice,
   );
-  const prices = useAppSelector(state => state.currencyOverviewSlice.data);
+
+  const {
+    id,
+    name,
+    image,
+    symbol,
+    market_data: {
+      current_price,
+      high_24h,
+      low_24h,
+      price_change_percentage_24h,
+      price_change_percentage_7d,
+      price_change_percentage_30d,
+      price_change_percentage_1y,
+      market_cap,
+      total_volume,
+    },
+  } = currencyInfo;
 
   useEffect(() => {
-    setViewHeaderOptions();
-  }, []);
+    setHeaderOptions();
+  }, [screenMode, currencyInfo]);
+
+  const setHeaderOptions = () => {
+    switch (screenMode) {
+      case 'view':
+        setViewHeaderOptions();
+        break;
+      case 'search':
+        setSearchHeaderOptions();
+        break;
+      default:
+        return;
+    }
+  };
+
+  const setSearchHeaderOptions = () => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <HeaderBackArrow
+          onPress={() => dispatch(setCurrencyScreenMode('view'))}
+        />
+      ),
+      headerRight: () => <></>,
+      headerTitle: () => <NavTitle text="Search" />,
+    });
+  };
 
   const setViewHeaderOptions = () => {
     navigation.setOptions({
@@ -74,13 +93,8 @@ const CurrencyScreen = ({navigation, route}: Props) => {
   };
 
   const onPressSearch = () => {
-    setScreenMode('search');
-
-    navigation.setOptions({
-      headerLeft: () => <HeaderBackArrow />,
-      headerRight: () => <></>,
-      headerTitle: () => <NavTitle text="Search" />,
-    });
+    dispatch(setCurrencyScreenMode('search'));
+    setSearchHeaderOptions();
   };
 
   const PriceAndChange = () => (
@@ -94,34 +108,6 @@ const CurrencyScreen = ({navigation, route}: Props) => {
       />
     </View>
   );
-
-  const LowHighText = ({
-    title = '',
-    value = 0,
-  }: {
-    title: string;
-    value: number | string;
-  }) => {
-    const outputValue = () => {
-      if (typeof value === 'number') {
-        const decimalNumbers = countDecimals(value);
-        return decimalNumbers > 6
-          ? coinPriceToLocaleString(value.toFixed(6))
-          : coinPriceToLocaleString(value);
-      } else {
-        return value;
-      }
-    };
-
-    return (
-      <Text style={{fontFamily: appStyles.fonts.regular, marginRight: 20}}>
-        {title + ' ' + CURRENCY_SYMBOL + ' '}
-        <Text style={{fontFamily: appStyles.fonts.semiBold}}>
-          {outputValue()}
-        </Text>
-      </Text>
-    );
-  };
 
   const LowHighTexts = () => (
     <View style={{marginTop: 10, flexDirection: 'row'}}>
@@ -137,7 +123,7 @@ const CurrencyScreen = ({navigation, route}: Props) => {
   );
 
   const getCurrencyInfoByInterval = () => {
-    const getStoredPrices = prices.find(
+    const getStoredPrices = pricesData.find(
       p => p.currencyId === id && p.filterId === activeFilter.id,
     )?.prices;
 
@@ -258,3 +244,5 @@ const styles = StyleSheet.create({
 });
 
 export default CurrencyScreen;
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;

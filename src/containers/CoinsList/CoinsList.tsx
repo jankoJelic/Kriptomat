@@ -42,6 +42,10 @@ const CoinsList: React.FC = () => {
     ascending: false,
   });
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const fetchData = async () => {
     if (!!coins.length) {
       setData(coins);
@@ -59,10 +63,6 @@ const CoinsList: React.FC = () => {
 
     dispatch(setIsLoading(false));
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const sortData = ({
     ascending,
