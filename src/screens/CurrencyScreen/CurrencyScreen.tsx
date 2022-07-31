@@ -16,11 +16,12 @@ import {useAppDispatch, useAppSelector} from 'store/hooks';
 import OverviewTable from './OverviewTable';
 import CoinsList from 'containers/CoinsList';
 import {setCurrencyScreenMode} from 'store/currencyOverviewSlice';
-import LowHighText from 'components/text/LowHighText';
+import LowHighTexts from './LowHighTexts';
+import getCurrencyInfoByInterval from './getCurrencyInfoByInterval';
 
 const CurrencyScreen: React.FC<Props> = ({navigation}) => {
   const dispatch = useAppDispatch();
-  const {screenMode, activeFilter, pricesData, currencyInfo} = useAppSelector(
+  const {screenMode, currencyInfo} = useAppSelector(
     state => state.currencyOverviewSlice,
   );
 
@@ -29,17 +30,7 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
     name,
     image,
     symbol,
-    market_data: {
-      current_price,
-      high_24h,
-      low_24h,
-      price_change_percentage_24h,
-      price_change_percentage_7d,
-      price_change_percentage_30d,
-      price_change_percentage_1y,
-      market_cap,
-      total_volume,
-    },
+    market_data: {current_price, market_cap, total_volume},
   } = currencyInfo;
 
   useEffect(() => {
@@ -94,7 +85,6 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
 
   const onPressSearch = () => {
     dispatch(setCurrencyScreenMode('search'));
-    setSearchHeaderOptions();
   };
 
   const PriceAndChange = () => (
@@ -108,77 +98,6 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
       />
     </View>
   );
-
-  const LowHighTexts = () => (
-    <View style={{marginTop: 10, flexDirection: 'row'}}>
-      <LowHighText
-        title={`${activeFilter.title} Low`}
-        value={getCurrencyInfoByInterval().low}
-      />
-      <LowHighText
-        title={`${activeFilter.title} High`}
-        value={getCurrencyInfoByInterval().high}
-      />
-    </View>
-  );
-
-  const getCurrencyInfoByInterval = () => {
-    const getStoredPrices = pricesData.find(
-      p => p.currencyId === id && p.filterId === activeFilter.id,
-    )?.prices;
-
-    if (!!getStoredPrices) {
-      const minValue = Math.min(...getStoredPrices);
-      const maxValue = Math.max(...getStoredPrices);
-
-      const percentageChange = (maxValue / minValue) * 100;
-
-      switch (activeFilter.id) {
-        case 1:
-          return {
-            low: low_24h.eur,
-            high: high_24h.eur,
-            priceChangePercentage: price_change_percentage_24h,
-          };
-        case 2:
-          return {
-            low: minValue,
-            high: maxValue,
-            priceChangePercentage: price_change_percentage_7d,
-          };
-        case 3:
-          return {
-            low: minValue,
-            high: maxValue,
-            priceChangePercentage: price_change_percentage_30d,
-          };
-        case 4:
-          return {
-            low: minValue,
-            high: maxValue,
-            priceChangePercentage: price_change_percentage_1y,
-          };
-        case 5:
-          return {
-            low: minValue,
-            high: maxValue,
-            priceChangePercentage: percentageChange,
-          };
-        default:
-          return {
-            low: '',
-            high: '',
-            priceChangePercentage: '',
-          };
-      }
-    } else {
-      return {
-        low: '',
-        high: '',
-        priceChangePercentage: '',
-      };
-    }
-  };
 
   return (
     <>
