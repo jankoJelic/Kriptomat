@@ -2,7 +2,15 @@ import appStyles from 'constants/appStyles';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
 
-const PriceChangeTriangle = ({value = 0, pastelColors = false}) => {
+interface Props {
+  value: string | number;
+  pastelColors?: boolean;
+}
+
+const PriceChangeTriangle: React.FC<Props> = ({
+  value = 0,
+  pastelColors = false,
+}) => {
   const negativeChange = value < 0;
 
   const color = negativeChange

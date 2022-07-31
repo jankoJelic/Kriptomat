@@ -4,7 +4,15 @@ import appStyles from 'constants/appStyles';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-const PriceChangeIndicator = ({value = 0, pastelColors = false}) => {
+interface Props {
+  value: string | number;
+  pastelColors?: boolean;
+}
+
+const PriceChangeIndicator: React.FC<Props> = ({
+  value = 0,
+  pastelColors = false,
+}) => {
   return (
     <View
       style={{

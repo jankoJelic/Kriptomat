@@ -46,7 +46,7 @@ const CurrencyLineChart = ({currencyId = ''}) => {
     });
 
     if (response.status === 200) {
-      const prices = extractPricesFromResponse(response);
+      const prices: number[] = extractPricesFromResponse(response);
 
       dispatch(
         storePricesData({

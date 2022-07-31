@@ -12,6 +12,7 @@ import PriceChangeIndicator from 'containers/PriceChangeIndicator';
 import CurrencyLineChart from 'components/charts/CurrencyLineChart';
 import {CURRENCY_SYMBOL} from 'constants/currency';
 import MainButton from 'components/buttons/MainButton';
+import {useAppSelector} from 'store/hooks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Currency'>;
 
@@ -26,16 +27,25 @@ const CurrencyScreen = ({navigation, route}: Props) => {
         high_24h,
         low_24h,
         price_change_percentage_24h,
-        // price_change_percentage_7d,
-        // price_change_percentage_30d,
-        // price_change_percentage_1y,
+        price_change_percentage_7d,
+        price_change_percentage_30d,
+        price_change_percentage_1y,
         // market_cap,
         // total_volume,
       },
     },
   } = route.params;
 
+  const activeFilter = useAppSelector(
+    state => state.currencyOverviewSlice.activeFilter,
+  );
+  const prices = useAppSelector(state => state.currencyOverviewSlice.data);
+
   useEffect(() => {
+    setHeaderOptions();
+  }, []);
+
+  const setHeaderOptions = () => {
     navigation.setOptions({
       headerLeft: () => (
         <View style={styles.row}>
@@ -48,18 +58,27 @@ const CurrencyScreen = ({navigation, route}: Props) => {
         <Icon name="search" color={appStyles.colors.textMain} size={24} />
       ),
     });
-  }, []);
+  };
 
   const PriceAndChange = () => (
     <View style={styles.topView}>
       <Text style={styles.priceText}>
         {CURRENCY_SYMBOL + coinPriceToLocaleString(current_price.eur)}
       </Text>
-      <PriceChangeIndicator pastelColors value={price_change_percentage_24h} />
+      <PriceChangeIndicator
+        pastelColors
+        value={getCurrencyInfoByInterval().priceChangePercentage}
+      />
     </View>
   );
 
-  const LowHighText = ({title = '', value = 0}) => (
+  const LowHighText = ({
+    title = '',
+    value = 0,
+  }: {
+    title: string;
+    value: string | number;
+  }) => (
     <Text style={{fontFamily: appStyles.fonts.regular, marginRight: 20}}>
       {title + ' ' + CURRENCY_SYMBOL + ' '}
       <Text style={{fontFamily: appStyles.fonts.semiBold}}>
@@ -70,10 +89,74 @@ const CurrencyScreen = ({navigation, route}: Props) => {
 
   const LowHighTexts = () => (
     <View style={{marginTop: 10, flexDirection: 'row'}}>
-      <LowHighText title="24h Low" value={low_24h.eur} />
-      <LowHighText title="24h High" value={high_24h.eur} />
+      <LowHighText
+        title={`${activeFilter.title} Low`}
+        value={getCurrencyInfoByInterval().low}
+      />
+      <LowHighText
+        title={`${activeFilter.title} High`}
+        value={getCurrencyInfoByInterval().high}
+      />
     </View>
   );
+
+  const getCurrencyInfoByInterval = () => {
+    const getStoredPrices = prices.find(
+      p => p.currencyId === id && p.filterId === activeFilter.id,
+    )?.prices;
+
+    if (!!getStoredPrices) {
+      const minValue = Math.min(...getStoredPrices);
+      const maxValue = Math.max(...getStoredPrices);
+
+      const percentageChange = (maxValue / minValue) * 100;
+
+      switch (activeFilter.id) {
+        case 1:
+          return {
+            low: low_24h.eur,
+            high: high_24h.eur,
+            priceChangePercentage: price_change_percentage_24h,
+          };
+        case 2:
+          return {
+            low: minValue,
+            high: maxValue,
+            priceChangePercentage: price_change_percentage_7d,
+          };
+        case 3:
+          return {
+            low: minValue,
+            high: maxValue,
+            priceChangePercentage: price_change_percentage_30d,
+          };
+        case 4:
+          return {
+            low: minValue,
+            high: maxValue,
+            priceChangePercentage: price_change_percentage_1y,
+          };
+        case 5:
+          return {
+            low: minValue,
+            high: maxValue,
+            priceChangePercentage: percentageChange,
+          };
+        default:
+          return {
+            low: '',
+            high: '',
+            priceChangePercentage: '',
+          };
+      }
+    } else {
+      return {
+        low: '',
+        high: '',
+        priceChangePercentage: '',
+      };
+    }
+  };
 
   return (
     <ScrollView style={styles.screen}>

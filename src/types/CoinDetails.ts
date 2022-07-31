@@ -17,7 +17,12 @@ interface CoinDetails {
     low_24h: {
       eur: number;
     };
+    price_change_percentage_7d: number;
     price_change_percentage_24h: number;
+    price_change_percentage_30d: number;
+    price_change_percentage_1y: number;
+    // market_cap;
+    // total_volume;
   };
 }
 
