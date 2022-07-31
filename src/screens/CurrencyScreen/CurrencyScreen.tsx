@@ -21,12 +21,11 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
   const {screenMode, currencyInfo} = useAppSelector(
     state => state.currencyOverviewSlice,
   );
-
   const {id, name, image} = currencyInfo;
 
   useEffect(() => {
     setHeaderOptions();
-  }, [screenMode, currencyInfo]);
+  }, [screenMode]);
 
   const setHeaderOptions = () => {
     switch (screenMode) {
@@ -78,9 +77,9 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
     dispatch(setCurrencyScreenMode('search'));
   };
 
-  return (
-    <>
-      {screenMode === 'view' ? (
+  switch (screenMode) {
+    case 'view':
+      return (
         <ScrollView style={styles.screen}>
           <PriceAndChange />
           <LowHighTexts />
@@ -89,13 +88,14 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
           <Text style={styles.overviewText}>Overview</Text>
           <OverviewTable />
         </ScrollView>
-      ) : (
+      );
+    case 'search':
+      return (
         <View style={{alignItems: 'center'}}>
           <CoinsList />
         </View>
-      )}
-    </>
-  );
+      );
+  }
 };
 
 const styles = StyleSheet.create({
