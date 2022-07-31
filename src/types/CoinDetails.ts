@@ -8,6 +8,7 @@ interface CoinDetails {
     large: string;
   };
   market_data: {
+    circulating_supply: number;
     current_price: {
       eur: number;
     };

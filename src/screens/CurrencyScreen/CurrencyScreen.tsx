@@ -6,10 +6,8 @@ import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import appStyles from 'constants/appStyles';
-import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 import HeaderBackArrow from 'components/icons/HeaderBackArrow';
 import CurrencyLineChart from 'components/charts/CurrencyLineChart';
-import {CURRENCY_SYMBOL} from 'constants/currency';
 import MainButton from 'components/buttons/MainButton';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import OverviewTable from './OverviewTable';
@@ -24,13 +22,7 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
     state => state.currencyOverviewSlice,
   );
 
-  const {
-    id,
-    name,
-    image,
-    symbol,
-    market_data: {market_cap, total_volume},
-  } = currencyInfo;
+  const {id, name, image} = currencyInfo;
 
   useEffect(() => {
     setHeaderOptions();
@@ -95,22 +87,7 @@ const CurrencyScreen: React.FC<Props> = ({navigation}) => {
           <CurrencyLineChart currencyId={id} />
           <MainButton text={`Buy, Sell or Exchange ${name}`} />
           <Text style={styles.overviewText}>Overview</Text>
-          <OverviewTable
-            firstCellTitle="Volume(1d):"
-            firstCellValue={
-              CURRENCY_SYMBOL + coinPriceToLocaleString(total_volume.eur)
-            }
-            secondCellTitle="Market cap:"
-            secondCellValue={
-              CURRENCY_SYMBOL + coinPriceToLocaleString(market_cap.eur)
-            }
-            thirdCellTitle="Circulating supply:"
-            thirdCellValue={
-              coinPriceToLocaleString(total_volume.eur) +
-              ' ' +
-              symbol.toUpperCase()
-            }
-          />
+          <OverviewTable />
         </ScrollView>
       ) : (
         <View style={{alignItems: 'center'}}>

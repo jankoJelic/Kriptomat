@@ -1,23 +1,9 @@
 import appStyles from 'constants/appStyles';
+import {CURRENCY_SYMBOL} from 'constants/currency';
 import React from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
-
-interface RowProps {
-  leftCellTitle: string;
-  leftCellValue: string;
-  rightCellTitle?: string;
-  rightCellValue?: string;
-  last?: boolean;
-}
-
-interface TableProps {
-  firstCellTitle: string;
-  firstCellValue: string;
-  secondCellTitle: string;
-  secondCellValue: string;
-  thirdCellTitle: string;
-  thirdCellValue: string;
-}
+import {useAppSelector} from 'store/hooks';
+import coinPriceToLocaleString from 'util/numbers/coinPriceToLocaleString';
 
 const Row: React.FC<RowProps> = ({
   leftCellTitle = '',
@@ -47,24 +33,39 @@ const Row: React.FC<RowProps> = ({
   </View>
 );
 
-const OverviewTable: React.FC<TableProps> = ({
-  firstCellTitle,
-  firstCellValue,
-  secondCellTitle,
-  secondCellValue,
-  thirdCellTitle,
-  thirdCellValue,
-}) => (
-  <View style={styles.table}>
-    <Row
-      leftCellTitle={firstCellTitle}
-      leftCellValue={firstCellValue}
-      rightCellTitle={secondCellTitle}
-      rightCellValue={secondCellValue}
-    />
-    <Row leftCellTitle={thirdCellTitle} leftCellValue={thirdCellValue} last />
-  </View>
-);
+const OverviewTable = () => {
+  const {currencyInfo} = useAppSelector(state => state.currencyOverviewSlice);
+
+  const {
+    symbol,
+
+    market_data: {market_cap, total_volume, circulating_supply},
+  } = currencyInfo;
+
+  return (
+    <View style={styles.table}>
+      <Row
+        leftCellTitle="Volume (1d):"
+        leftCellValue={
+          CURRENCY_SYMBOL + coinPriceToLocaleString(total_volume.eur)
+        }
+        rightCellTitle="Market cap:"
+        rightCellValue={
+          CURRENCY_SYMBOL + coinPriceToLocaleString(market_cap.eur)
+        }
+      />
+      <Row
+        leftCellTitle="Circulating supply:"
+        leftCellValue={
+          coinPriceToLocaleString(circulating_supply) +
+          ' ' +
+          symbol.toUpperCase()
+        }
+        last
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   table: {
@@ -95,3 +96,11 @@ const styles = StyleSheet.create({
 });
 
 export default OverviewTable;
+
+interface RowProps {
+  leftCellTitle: string;
+  leftCellValue: string;
+  rightCellTitle?: string;
+  rightCellValue?: string;
+  last?: boolean;
+}
