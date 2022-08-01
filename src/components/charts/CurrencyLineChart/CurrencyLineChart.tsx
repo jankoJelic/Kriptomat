@@ -12,6 +12,7 @@ import {
   storePricesData,
 } from 'store/currencyOverviewSlice';
 import filters from './filters';
+import everyNthItemOdArray from 'util/arrays/everyNthItemOfArray';
 
 const CurrencyLineChart = ({currencyId = ''}) => {
   const {width} = useWindowDimensions();
@@ -49,11 +50,17 @@ const CurrencyLineChart = ({currencyId = ''}) => {
 
     if (response.status === 200) {
       const prices: number[] = extractPricesFromResponse(response);
-      const everyTenthPrice = prices.filter((p, i) => i % 10 === 0);
+      const everyNthPrice = (n: number) =>
+        everyNthItemOdArray({array: prices, n});
 
-      const pricesToBeSaved = [4, 5].includes(filter.id) // for performance reasons
-        ? everyTenthPrice
-        : prices;
+      const pricesToBeSaved =
+        filter.id === 1
+          ? everyNthPrice(5)
+          : filter.id === 4
+          ? everyNthPrice(10)
+          : filter.id === 5
+          ? everyNthPrice(50)
+          : prices;
 
       dispatch(
         storePricesData({
