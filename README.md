@@ -5,7 +5,7 @@ Install dependencies:
 npm install
 
 To run on Android simulator or connected device that has USB debugging enabled run:
-npm run android
+react-native run-android --variant=release
 
 To run on iOS simulator or device, run:
-npm run ios
+npx react-native run-ios --configuration Release
