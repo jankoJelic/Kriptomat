@@ -16,7 +16,9 @@ import filters from './filters';
 const CurrencyLineChart = ({currencyId = ''}) => {
   const {width} = useWindowDimensions();
   const dispatch = useAppDispatch();
-  const pricesData = useAppSelector(state => state.currencyOverviewSlice.pricesData);
+  const pricesData = useAppSelector(
+    state => state.currencyOverviewSlice.pricesData,
+  );
   const [data, setData] = useState<number[]>([0]);
 
   const extractPricesFromResponse = (res: {
@@ -47,15 +49,20 @@ const CurrencyLineChart = ({currencyId = ''}) => {
 
     if (response.status === 200) {
       const prices: number[] = extractPricesFromResponse(response);
+      const everyTenthPrice = prices.filter((p, i) => i % 10 === 0);
+
+      const pricesToBeSaved = [4, 5].includes(filter.id) // for performance reasons
+        ? everyTenthPrice
+        : prices;
 
       dispatch(
         storePricesData({
           filterId: filter.id,
           currencyId,
-          prices,
+          prices: pricesToBeSaved,
         }),
       );
-      setData(prices);
+      setData(pricesToBeSaved);
     }
     dispatch(setIsLoading(false));
   };
